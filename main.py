@@ -20,6 +20,8 @@ class Dungeoneer(pygame.sprite.Sprite):
         self.rect = img.get_rect()
         self.rect.center = (x, y)
         self.speed = speed
+        self.direction = 1
+        self.flip = False
 
     def move(self, moving_left, moving_right):
         dx = 0
@@ -27,14 +29,18 @@ class Dungeoneer(pygame.sprite.Sprite):
 
         if moving_left:
             dx = -self.speed
+            self.flip = True
+            self.direction = -1
         if moving_right:
             dx = self.speed
+            self.flip = False
+            self.direction = 1
 
         self.rect.x += dx
         self.rect.y += dy
 
     def draw(self):
-        screen.blit(self.image, self.rect)
+        screen.blit(pygame.transform.flip(self.image, self.flip, False),self.rect)
 
 player = Dungeoneer(100, 100, 3, 5)
 
